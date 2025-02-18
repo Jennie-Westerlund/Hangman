@@ -8,10 +8,9 @@
   <body>
     <div id="menu">
       <button onclick="createRoom()">Create Room</button>
-      <button onclick="showJoinForm()">Join Room</button>
   </div>
 
-  <div id="joinForm" style="display: none;">
+  <div id="joinForm">
       <input type="text" id="roomInput" placeholder="Enter Room ID">
       <button onclick="joinRoom()">Join</button>
   </div>
@@ -28,10 +27,6 @@
 
       function createRoom() {
           socket.emit('createRoom');
-      }
-
-      function showJoinForm() {
-          document.getElementById('joinForm').style.display = 'block';
       }
 
       function joinRoom() {
@@ -55,7 +50,7 @@
         document.getElementById('roomInfo').innerHTML = `
         Room created! Share this ID with your friends: ${roomId}
         <br>
-        <button onclick="startGame()">Start Game</button>
+        <button class="startBtn" onclick="startGame()">Start Game</button>
           `;
           document.getElementById('menu').style.display = 'none';
         });
