@@ -7,6 +7,9 @@
 
 
 ### Tisdag
+- Exitknapp?
+- Behöver spelgrejer ligga i game.logic.js? 
+- Kolla tutorial på hangman med html och css
 
 
 ### Onsdag 
