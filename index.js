@@ -5,6 +5,8 @@ import { nanoid } from 'nanoid';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
+import words from './src/models/database.js';
+import { getRandomWord } from './src/helpers/word.functions.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -95,7 +97,8 @@ io.on('connection', (socket) => {
         
         if (room) {
             room.gameState.gameStarted = true;
-            room.gameState.word = 'WORD'; // Set your word here
+            room.gameState.word = getRandomWord(words); // Set your word here
+            console.log(room.gameState.word);
             console.log('Game started in room:', roomId);
             io.to(roomId).emit('gameStarted', room.gameState);
         } else {

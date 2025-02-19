@@ -4,7 +4,9 @@ const socket = io();
 
         function updateGameStatus(gameState) {
             const gameStatus = document.getElementById('gameStatus');
+            const wordDisplay = document.getElementById("wordDisplay");
             gameStatus.innerHTML = `Game is active - Room: ${roomId}`;
+            wordDisplay.innerHTML = gameState.word.split("").map(() => `<li class="letter"></li>`).join("");
             console.log('Game State:', gameState);
         }
 

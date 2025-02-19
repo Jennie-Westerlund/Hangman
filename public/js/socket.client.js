@@ -1,5 +1,10 @@
 const socket = io();
 
+function displayWord(gameRoom) {
+  const wordDisplay = document.getElementById("wordDisplay");
+  wordDisplay.innerHTML = gameRoom.word.split("").map(() => `<li class="letter"></li>`).join("");
+}
+/*
 const form = document.getElementById('form');
 const input = document.getElementById('input');
 const messages = document.getElementById('messages');
@@ -18,3 +23,4 @@ socket.on('chat message', (msg) => {
   messages.appendChild(item);
   window.scrollTo(0, document.body.scrollHeight);
 });
+*/
