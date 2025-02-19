@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Get the messages container
-    const messages = document.getElementById("messages");
+    //const messages = document.getElementById("messages");
 
     // Get all buttons and add click event listeners
     const buttons = document.getElementsByClassName("letter-button");
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let btn of buttons) {
         btn.addEventListener("click", function () {
           const clickedButtonValue = this.getAttribute("data-letter");
-          messages.textContent = `You clicked: ${clickedButtonValue}`;
+          //messages.textContent = `You clicked: ${clickedButtonValue}`;
           
           console.log('Button clicked in keyboard.js:', clickedButtonValue);
           

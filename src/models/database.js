@@ -1,19 +1,19 @@
 const words = [
-    "pilot",
-    "jungle",
-    "mystery",
-    "cake",
-    "dolphin",
-    "sunset",
-    "brave",
-    "telescope",
-    "piano",
-    "rainbow",
-    "dice",
-    "mountain",
-    "book",
-    "turtle",
-    "whisper"
+    "PILOT",
+    "JUNGLE",
+    "MYSTERY",
+    "CAKE",
+    "DOLPHIN",
+    "SUNSET",
+    "BRAVE",
+    "TELESCOPE",
+    "PIANO",
+    "RAINBOW",
+    "DICE",
+    "MOUNTAIN",
+    "BOOK",
+    "TURTLE",
+    "WHISPER"
   ];
 
 export default words;

@@ -1,6 +1,7 @@
 const socket = io();
         const urlParams = new URLSearchParams(window.location.search);
         const roomId = urlParams.get('room');
+        let currentGameState = null;
 
         function updateGameStatus(gameState) {
             const gameStatus = document.getElementById('gameStatus');
@@ -8,6 +9,7 @@ const socket = io();
             gameStatus.innerHTML = `Game is active - Room: ${roomId}`;
             wordDisplay.innerHTML = gameState.word.split("").map(() => `<li class="letter"></li>`).join("");
             console.log('Game State:', gameState);
+            currentGameState = gameState;
         }
 
         socket.on('connect', () => {
@@ -54,8 +56,23 @@ window.onload = function() {
 // Listen for the custom event and emit to socket
 document.addEventListener('letterGuessed', (event) => {
     socket.emit('letterGuess', {
-      letter: event.detail.letter,
-      roomId: roomId
+        letter: event.detail.letter,
+        roomId: roomId
     });
-console.log('Letter emitted to socket:', event.detail.letter, 'Room:', roomId);
+    console.log('Letter emitted to socket:', event.detail.letter, 'Room:', roomId);
+    
+    const messages = document.getElementById("messages");
+    const letterGuess = event.detail.letter;
+    
+    // Check if we have a game state
+    if (currentGameState && currentGameState.word) {
+        if (currentGameState.word.includes(letterGuess)) {
+            messages.textContent = `${letterGuess} exists in the word ${currentGameState.word}`;
+        } else {
+            messages.textContent = `${letterGuess} does not exist in the word ${currentGameState.word}`;
+        }
+    } else {
+        console.log("Game state or word not available yet");
+    }
 });
+
