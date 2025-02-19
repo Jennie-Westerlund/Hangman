@@ -50,3 +50,12 @@ window.onload = function() {
       socket.emit('joinRoom', storedRoomId);
   }
 };
+
+// Listen for the custom event and emit to socket
+document.addEventListener('letterGuessed', (event) => {
+    socket.emit('letterGuess', {
+      letter: event.detail.letter,
+      roomId: roomId
+    });
+console.log('Letter emitted to socket:', event.detail.letter, 'Room:', roomId);
+});

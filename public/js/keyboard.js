@@ -18,8 +18,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     for (let btn of buttons) {
         btn.addEventListener("click", function () {
-            const clickedButtonValue = this.getAttribute("data-letter");
-            messages.textContent = `You clicked: ${clickedButtonValue}`;
+          const clickedButtonValue = this.getAttribute("data-letter");
+          messages.textContent = `You clicked: ${clickedButtonValue}`;
+          
+          console.log('Button clicked in keyboard.js:', clickedButtonValue);
+          
+          // Dispatch a custom event
+          const letterGuessEvent = new CustomEvent('letterGuessed', {
+            detail: { letter: clickedButtonValue }
+          });
+          document.dispatchEvent(letterGuessEvent);
+          console.log('Custom event dispatched in keyboard.js');
         });
     }
 });
