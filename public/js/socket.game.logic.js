@@ -67,12 +67,23 @@ document.addEventListener('letterGuessed', (event) => {
     // Check if we have a game state
     if (currentGameState && currentGameState.word) {
         if (currentGameState.word.includes(letterGuess)) {
-            messages.textContent = `${letterGuess} exists in the word ${currentGameState.word}`;
+            const correctLetter = `${letterGuess} exists in the word ${currentGameState.word}`;
+            messages.textContent = correctLetter;
+            socket.emit('correctGuess', correctLetter);
         } else {
-            messages.textContent = `${letterGuess} does not exist in the word ${currentGameState.word}`;
+            const wrongLetter = `${letterGuess} does not exist in the word ${currentGameState.word}`;
+            messages.textContent = wrongLetter;
+            socket.emit('wrongGuess', wrongLetter);
         }
     } else {
         console.log("Game state or word not available yet");
     }
 });
 
+socket.on('receivedCorrectGuess', correctLetter => {
+    messages.textContent = correctLetter;
+})
+
+socket.on('receivedWrongGuess', wrongLetter => {
+    messages.textContent = wrongLetter;
+})

@@ -107,6 +107,14 @@ io.on('connection', (socket) => {
         }
     });
 
+    socket.on('correctGuess', correctLetter => {
+        socket.broadcast.emit('receivedCorrectGuess', correctLetter)
+    })
+
+    socket.on('wrongGuess', wrongLetter => {
+        socket.broadcast.emit('receivedWrongGuess', wrongLetter)
+    })
+
     socket.on('disconnect', () => {
       console.log('User disconnected:', socket.id);
       for (const [roomId, room] of rooms.entries()) {
