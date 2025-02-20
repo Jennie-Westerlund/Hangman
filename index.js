@@ -1,7 +1,7 @@
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import { customAlphabet } from 'nanoid';
+import { nanoid } from 'nanoid';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
@@ -11,7 +11,6 @@ import { getRandomWord } from './src/helpers/word.functions.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 5);
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
@@ -32,7 +31,7 @@ io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
 
     socket.on('createRoom', () => {
-        const roomId = nanoid(5);
+        const roomId = nanoid(6);
         console.log('Creating new room:', roomId);
         
         rooms.set(roomId, {
@@ -112,8 +111,8 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('receivedCorrectGuess', correctLetter)
     })
 
-    socket.on('wrongGuess', wrongLetter => {
-        socket.broadcast.emit('receivedWrongGuess', wrongLetter)
+    socket.on('wrongGuess', wrongGuessCount => {
+        socket.broadcast.emit('receivedWrongGuess', wrongGuessCount)
     })
 
     socket.on('disconnect', () => {

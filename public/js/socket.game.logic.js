@@ -2,6 +2,7 @@ const socket = io();
         const urlParams = new URLSearchParams(window.location.search);
         const roomId = urlParams.get('room');
         let currentGameState = null;
+        let wrongGuessCount = 0;
 
         function updateGameStatus(gameState) {
             const gameStatus = document.getElementById('gameStatus');
@@ -76,9 +77,10 @@ document.addEventListener('letterGuessed', (event) => {
                 }
             })
         } else {
-            const wrongLetter = `${letterGuess} does not exist in the word ${currentGameState.word}`;
-            messages.textContent = wrongLetter;
-            socket.emit('wrongGuess', wrongLetter);
+            wrongGuessCount++;
+            const hangmanImage = document.querySelector(".hangmanImage")
+            hangmanImage.src = `../assets/hangman-${wrongGuessCount}.svg`
+            socket.emit('wrongGuess', wrongGuessCount);
         }
 
     } else {
@@ -95,6 +97,7 @@ socket.on('receivedCorrectGuess', correctLetter => {
     })
 })
 
-socket.on('receivedWrongGuess', wrongLetter => {
-    messages.textContent = wrongLetter;
+socket.on('receivedWrongGuess', wrongGuessCount => {
+    const hangmanImage = document.querySelector(".hangmanImage")
+    hangmanImage.src = `../assets/hangman-${wrongGuessCount}.svg`
 })
