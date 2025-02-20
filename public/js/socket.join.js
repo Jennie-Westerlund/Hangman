@@ -1,11 +1,11 @@
-const socket = io();
+import socket from './socket.client.js';
       let currentRoomId = null;
 
-      function createRoom() {
+      export function createRoom() {
           socket.emit('createRoom');
       }
 
-      function joinRoom() {
+      export function joinRoom() {
           const roomId = document.getElementById('roomInput').value.trim();
           if (roomId) {
               socket.emit('joinRoom', roomId);
@@ -15,7 +15,7 @@ const socket = io();
           }
       }
 
-      function startGame() {
+      export function startGame() {
           if (currentRoomId) {
               socket.emit('startGame', currentRoomId);
             }
