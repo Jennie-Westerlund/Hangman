@@ -67,15 +67,12 @@ document.addEventListener('letterGuessed', (event) => {
     // Check if we have a game state
     if (currentGameState && currentGameState.word) {
         if (currentGameState.word.includes(letterGuess)) {
-            const correctLetter = `${letterGuess} exists in the word ${currentGameState.word}`;
-            messages.textContent = correctLetter;
-            socket.emit('correctGuess', correctLetter);
-
             //Showing all correct letters on the word display
             [...currentGameState.word].forEach((letter, index) => {
                 if(letter === letterGuess){
                     wordDisplay.querySelectorAll("li")[index].innerText = letter;
                     wordDisplay.querySelectorAll("li")[index].classList.add("guessed");
+                    socket.emit('correctGuess', letterGuess);
                 }
             })
         } else {
@@ -83,13 +80,19 @@ document.addEventListener('letterGuessed', (event) => {
             messages.textContent = wrongLetter;
             socket.emit('wrongGuess', wrongLetter);
         }
+
     } else {
         console.log("Game state or word not available yet");
     }
 });
 
 socket.on('receivedCorrectGuess', correctLetter => {
-    messages.textContent = correctLetter;
+    [...currentGameState.word].forEach((letter, index) => {
+        if(letter === correctLetter){
+            wordDisplay.querySelectorAll("li")[index].innerText = letter;
+            wordDisplay.querySelectorAll("li")[index].classList.add("guessed");
+        }
+    })
 })
 
 socket.on('receivedWrongGuess', wrongLetter => {
