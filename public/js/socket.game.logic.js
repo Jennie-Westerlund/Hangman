@@ -70,6 +70,14 @@ document.addEventListener('letterGuessed', (event) => {
             const correctLetter = `${letterGuess} exists in the word ${currentGameState.word}`;
             messages.textContent = correctLetter;
             socket.emit('correctGuess', correctLetter);
+
+            //Showing all correct letters on the word display
+            [...currentGameState.word].forEach((letter, index) => {
+                if(letter === letterGuess){
+                    wordDisplay.querySelectorAll("li")[index].innerText = letter;
+                    wordDisplay.querySelectorAll("li")[index].classList.add("guessed");
+                }
+            })
         } else {
             const wrongLetter = `${letterGuess} does not exist in the word ${currentGameState.word}`;
             messages.textContent = wrongLetter;
