@@ -19,7 +19,10 @@
 
 
 ### Fredag
-
+- 9 fel-gissningar "game-over"
+- starta nytt spel i rummet?
+- dynamisk alt-text?
+- ändra divar etc i html så att det går ihop med vår design
 
 ### Lördag 
 

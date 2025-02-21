@@ -75,10 +75,11 @@ document.addEventListener('letterGuessed', (event) => {
                 }
             })
         } else {
-            //Wrong guesses add to the count and uppdates the picture
+            //Wrong guesses add to the count and uppdates the picture and alt-text
             wrongGuessCount++;
-            const hangmanImage = document.querySelector(".hangmanImage")
-            hangmanImage.src = `../assets/hangman-${wrongGuessCount}.svg`
+            const hangmanImage = document.querySelector(".hangmanImage");
+            hangmanImage.src = `../assets/hangman-${wrongGuessCount}.svg`;
+            hangmanImage.alt = `Illustration of the hanged man with ${wrongGuessCount} out of 9 wrong guesses used`;
             socket.emit('wrongGuess', wrongGuessCount);
         }
 
@@ -99,5 +100,6 @@ socket.on('receivedCorrectGuess', correctLetter => {
 
 socket.on('receivedWrongGuess', wrongGuessCount => {
     const hangmanImage = document.querySelector(".hangmanImage")
-    hangmanImage.src = `../assets/hangman-${wrongGuessCount}.svg`
+    hangmanImage.src = `../assets/hangman-${wrongGuessCount}.svg`;
+    hangmanImage.alt = `Illustration of the hanged man with ${wrongGuessCount} out of 9 wrong guesses used`;
 })
