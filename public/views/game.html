@@ -2,8 +2,14 @@
 <html>
 <head>
     <title>Game Room</title>
+    <link rel="stylesheet" href="../css/game.css">
 </head>
 <body>
+    <section id="gameModal">
+        <h4 id="gameResult">Game over!</h4>
+        <p id="answer">The correct answer was:</p>
+        <button onclick="document.getElementById('gameModal').classList.remove('show')">Close</button>
+    </section>
     <div id="gameContainer">
         <h2>Game Room</h2>
         <div id="gameStatus"></div>

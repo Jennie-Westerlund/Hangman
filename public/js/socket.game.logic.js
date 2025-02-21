@@ -3,15 +3,26 @@ const socket = io();
         const roomId = urlParams.get('room');
         let currentGameState = null;
         let wrongGuessCount = 0;
+        const maxGuesses = 9;
+        const gameModal = document.getElementById('gameModal')
+        const wordDisplay = document.getElementById("wordDisplay");
 
         function updateGameStatus(gameState) {
             const gameStatus = document.getElementById('gameStatus');
-            const wordDisplay = document.getElementById("wordDisplay");
             gameStatus.innerHTML = `Game is active - Room: ${roomId}`;
             wordDisplay.innerHTML = gameState.word.split("").map(() => `<li class="letter"></li>`).join("");
             console.log('Game State:', gameState);
             currentGameState = gameState;
         }
+
+        function showGameModal(isVictory, word) {
+            console.log("GAME OVER TRIGGERED:", isVictory ? "Victory" : "Defeat", word);
+            
+            const modalText = isVictory ? `You found the word:` : `The correct word was:`;
+            gameModal.querySelector('h4').innerText = `${isVictory ? 'You win!' : 'Game over!'}`;
+            gameModal.querySelector('p').innerHTML = `${modalText} <strong>${word}</strong>`;
+            gameModal.classList.add('show');
+          }
 
         socket.on('connect', () => {
             if (roomId) {
@@ -74,6 +85,15 @@ document.addEventListener('letterGuessed', (event) => {
                     socket.emit('correctGuess', letterGuess);
                 }
             })
+            const correctLetters = wordDisplay.querySelectorAll("li.guessed");
+            console.log(`Correct letters: ${correctLetters.length}, Word length: ${currentGameState.word.length}`);
+            if (correctLetters.length === currentGameState.word.length) {
+                socket.emit('gameOver', {
+                    roomId: roomId,
+                    isVictory: true,
+                    word: currentGameState.word
+        });
+      }
         } else {
             //Wrong guesses add to the count and uppdates the picture and alt-text
             wrongGuessCount++;
@@ -81,6 +101,14 @@ document.addEventListener('letterGuessed', (event) => {
             hangmanImage.src = `../assets/hangman-${wrongGuessCount}.svg`;
             hangmanImage.alt = `Illustration of the hanged man with ${wrongGuessCount} out of 9 wrong guesses used`;
             socket.emit('wrongGuess', wrongGuessCount);
+            
+      if (wrongGuessCount === maxGuesses) {
+        socket.emit('gameOver', {
+            roomId: roomId,
+            isVictory: false,
+            word: currentGameState.word
+        });
+      }
         }
 
     } else {
@@ -103,3 +131,12 @@ socket.on('receivedWrongGuess', wrongGuessCount => {
     hangmanImage.src = `../assets/hangman-${wrongGuessCount}.svg`;
     hangmanImage.alt = `Illustration of the hanged man with ${wrongGuessCount} out of 9 wrong guesses used`;
 })
+
+socket.on('gameOverBroadcast', (data) => {
+    const gameModal = document.getElementById('gameModal');
+    const modalText = data.isVictory ? `You found the word:` : `The correct word was:`;
+    
+    gameModal.querySelector('h4').innerText = `${data.isVictory ? 'You win!' : 'Game over!'}`;
+    gameModal.querySelector('p').innerHTML = `${modalText} ${data.word}`;
+    gameModal.classList.add('show');
+});

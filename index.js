@@ -117,6 +117,13 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('receivedWrongGuess', wrongGuessCount)
     })
 
+    socket.on('gameOver', (data) => {
+        io.to(data.roomId).emit('gameOverBroadcast', {
+          isVictory: data.isVictory,
+          word: data.word
+        });
+      });
+
     socket.on('disconnect', () => {
       console.log('User disconnected:', socket.id);
       for (const [roomId, room] of rooms.entries()) {
