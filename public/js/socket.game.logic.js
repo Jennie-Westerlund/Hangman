@@ -61,8 +61,6 @@ document.addEventListener('letterGuessed', (event) => {
         roomId: roomId
     });
     console.log('Letter emitted to socket:', event.detail.letter, 'Room:', roomId);
-    
-    const messages = document.getElementById("messages");
     const letterGuess = event.detail.letter;
     
     // Check if we have a game state
@@ -77,6 +75,7 @@ document.addEventListener('letterGuessed', (event) => {
                 }
             })
         } else {
+            //Wrong guesses add to the count and uppdates the picture
             wrongGuessCount++;
             const hangmanImage = document.querySelector(".hangmanImage")
             hangmanImage.src = `../assets/hangman-${wrongGuessCount}.svg`
@@ -88,6 +87,7 @@ document.addEventListener('letterGuessed', (event) => {
     }
 });
 
+//uppdates the other players on the changes for right and wrong guesses
 socket.on('receivedCorrectGuess', correctLetter => {
     [...currentGameState.word].forEach((letter, index) => {
         if(letter === correctLetter){

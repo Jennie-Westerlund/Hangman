@@ -18,8 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     for (let btn of buttons) {
         btn.addEventListener("click", function () {
+          btn.disabled = true;
           const clickedButtonValue = this.getAttribute("data-letter");
-          //messages.textContent = `You clicked: ${clickedButtonValue}`;
           
           console.log('Button clicked in keyboard.js:', clickedButtonValue);
           
