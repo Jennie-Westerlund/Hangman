@@ -23,6 +23,7 @@
 - starta nytt spel i rummet?
 - dynamisk alt-text?
 - ändra divar etc i html så att det går ihop med vår design
+- Fixa så alla i rummet ser att button blivit inactive inte bara den som klicka!
 
 ### Lördag 
 

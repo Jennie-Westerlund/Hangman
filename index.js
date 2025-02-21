@@ -97,7 +97,7 @@ io.on('connection', (socket) => {
         
         if (room) {
             room.gameState.gameStarted = true;
-            room.gameState.word = getRandomWord(words); // Set your word here
+            room.gameState.word = getRandomWord(words);
             console.log(room.gameState.word);
             console.log('Game started in room:', roomId);
             io.to(roomId).emit('gameStarted', room.gameState);

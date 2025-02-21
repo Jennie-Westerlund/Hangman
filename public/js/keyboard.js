@@ -10,9 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
         keyboard.appendChild(button);
     }
 
-    // Get the messages container
-    //const messages = document.getElementById("messages");
-
     // Get all buttons and add click event listeners
     const buttons = document.getElementsByClassName("letter-button");
 
