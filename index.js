@@ -107,6 +107,7 @@ io.on('connection', (socket) => {
         }
     });
 
+    // Game-logic server-side
     socket.on('correctGuess', correctLetter => {
         socket.broadcast.emit('receivedCorrectGuess', correctLetter)
     })
