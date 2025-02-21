@@ -6,22 +6,20 @@
     <link rel="stylesheet" href="../css/login.css">
   </head>
   <body>
+  <section id="startPage">
+    <img src="../assets/Logo.svg" alt="Hangman logo">
     <img src="../assets/hangman-9.svg" alt="Illustration of a hanged man">
-    <div id="menu">
-      <button onclick="createRoom()">Create</button>
-  </div>
 
-  <div id="joinForm">
+    <section id="menu">
+      <button onclick="createRoom()">Create</button>
       <input type="text" id="roomInput" placeholder="Enter Room ID">
       <button onclick="joinRoom()">Join</button>
-  </div>
-
-  <div id="roomInfo"></div>
-
-  
-    
-    <script src="/socket.io/socket.io.js"></script>
-    <script type="module" src="../js/socket.join.js"></script>
+    </section>
+    <div id="roomInfo"></div>
+  </section>
+      
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="../js/socket.join.js"></script>
   <script type="module" src="../js/socket.client.js"></script>
   </body>
 </html>
