@@ -74,12 +74,13 @@ button {
     border-radius: 5px;
     background-color: var(--Primary-dark);
     text-align: center;
-    color: var(--Primary-light);
+    color: white;
     font-size: 1rem;
 }
 
 #menu input::placeholder {
     color: var(--Primary-light);
+    font-size: 1rem;
 }
 
 #roomInfo {
