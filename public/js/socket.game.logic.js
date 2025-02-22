@@ -65,54 +65,32 @@ window.onload = function() {
   }
 };
 
-// Listen for the custom event and emit to socket
 document.addEventListener('letterGuessed', (event) => {
-    socket.emit('letterGuess', {
-        letter: event.detail.letter,
-        roomId: roomId
-    });
-    console.log('Letter emitted to socket:', event.detail.letter, 'Room:', roomId);
     const letterGuess = event.detail.letter;
     
-    // Check if we have a game state
     if (currentGameState && currentGameState.word) {
         if (currentGameState.word.includes(letterGuess)) {
-            //Showing all correct letters on the word display
+            // Correct guess logic remains the same
             [...currentGameState.word].forEach((letter, index) => {
                 if(letter === letterGuess){
                     wordDisplay.querySelectorAll("li")[index].innerText = letter;
                     wordDisplay.querySelectorAll("li")[index].classList.add("guessed");
                     socket.emit('correctGuess', letterGuess);
                 }
-            })
+            });
+            
             const correctLetters = wordDisplay.querySelectorAll("li.guessed");
-            console.log(`Correct letters: ${correctLetters.length}, Word length: ${currentGameState.word.length}`);
             if (correctLetters.length === currentGameState.word.length) {
                 socket.emit('gameOver', {
                     roomId: roomId,
                     isVictory: true,
                     word: currentGameState.word
-        });
-      }
+                });
+            }
         } else {
-            //Wrong guesses add to the count and uppdates the picture and alt-text
-            wrongGuessCount++;
-            const hangmanImage = document.querySelector(".hangmanImage");
-            hangmanImage.src = `../assets/hangman-${wrongGuessCount}.svg`;
-            hangmanImage.alt = `Illustration of the hanged man with ${wrongGuessCount} out of 9 wrong guesses used`;
-            socket.emit('wrongGuess', [wrongGuessCount, letterGuess]);
-            
-      if (wrongGuessCount === maxGuesses) {
-        socket.emit('gameOver', {
-            roomId: roomId,
-            isVictory: false,
-            word: currentGameState.word
-        });
-      }
+            // Wrong guess - just emit to server
+            socket.emit('wrongGuess', letterGuess);
         }
-
-    } else {
-        console.log("Game state or word not available yet");
     }
 });
 
@@ -128,16 +106,17 @@ socket.on('receivedCorrectGuess', correctLetter => {
     button.disabled = true;
 })
 
-socket.on('receivedWrongGuess', ([wrongGuessCount, letterGuess]) => {
-    const hangmanImage = document.querySelector(".hangmanImage")
-    hangmanImage.src = `../assets/hangman-${wrongGuessCount}.svg`;
-    hangmanImage.alt = `Illustration of the hanged man with ${wrongGuessCount} out of 9 wrong guesses used`;
+socket.on('receivedWrongGuess', (data) => {
+    const hangmanImage = document.querySelector(".hangmanImage");
+    hangmanImage.src = `../assets/hangman-${data.wrongGuessCount}.svg`;
+    hangmanImage.alt = `Illustration of the hanged man with ${data.wrongGuessCount} out of 9 wrong guesses used`;
 
-    const button = document.querySelector(`[data-letter="${letterGuess}"]`);
+    const button = document.querySelector(`[data-letter="${data.letterGuess}"]`);
     button.disabled = true;
-})
+});
 
 socket.on('gameOverBroadcast', (data) => {
+    console.log('Client received gameOver - word:', data.word);
     const gameModal = document.getElementById('gameModal');
     const modalText = data.isVictory ? `You found the word:` : `The correct word was:`;
     

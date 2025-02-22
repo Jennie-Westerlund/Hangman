@@ -43,6 +43,7 @@ io.on('connection', (socket) => {
                 currentTurn: socket.id,
                 gameStarted: false,
                 disconnectedPlayers: new Set(),
+                wrongGuessCount: 0
             },
         });
 
@@ -113,11 +114,27 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('receivedCorrectGuess', correctLetter)
     })
 
-    socket.on('wrongGuess', ([wrongGuessCount, letterGuess]) => {
-        socket.broadcast.emit('receivedWrongGuess', ([wrongGuessCount, letterGuess]))
-    })
+    socket.on('wrongGuess', (letterGuess) => {
+        const room = [...rooms.values()].find(r => r.players.includes(socket.id));
+        
+        if (room) {
+            room.gameState.wrongGuessCount++;
+            io.to([...socket.rooms][1]).emit('receivedWrongGuess', {
+                wrongGuessCount: room.gameState.wrongGuessCount,
+                letterGuess: letterGuess
+            });
+
+            if (room.gameState.wrongGuessCount === 9) {
+                io.to([...socket.rooms][1]).emit('gameOverBroadcast', {
+                    isVictory: false,
+                    word: room.gameState.word
+                });
+            }
+        }
+    });
 
     socket.on('gameOver', (data) => {
+        console.log('Server gameOver - word:', data.word);
         io.to(data.roomId).emit('gameOverBroadcast', {
           isVictory: data.isVictory,
           word: data.word
