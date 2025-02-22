@@ -42,6 +42,7 @@ body {
 
 .hangmanImg {
     width: 170px;
+    margin-left: 1rem;
 }
 
 #menu {
