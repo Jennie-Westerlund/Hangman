@@ -139,4 +139,9 @@ socket.on('gameOverBroadcast', (data) => {
     gameModal.querySelector('h4').innerText = `${data.isVictory ? 'You win!' : 'Game over!'}`;
     gameModal.querySelector('p').innerHTML = `${modalText} ${data.word}`;
     gameModal.classList.add('show');
+
+    const allButtons = document.querySelectorAll('.letter-button');
+    allButtons.forEach(button => {
+        button.disabled = true;
+    });
 });
