@@ -100,7 +100,7 @@ document.addEventListener('letterGuessed', (event) => {
             const hangmanImage = document.querySelector(".hangmanImage");
             hangmanImage.src = `../assets/hangman-${wrongGuessCount}.svg`;
             hangmanImage.alt = `Illustration of the hanged man with ${wrongGuessCount} out of 9 wrong guesses used`;
-            socket.emit('wrongGuess', wrongGuessCount);
+            socket.emit('wrongGuess', [wrongGuessCount, letterGuess]);
             
       if (wrongGuessCount === maxGuesses) {
         socket.emit('gameOver', {
@@ -124,12 +124,17 @@ socket.on('receivedCorrectGuess', correctLetter => {
             wordDisplay.querySelectorAll("li")[index].classList.add("guessed");
         }
     })
+    const button = document.querySelector(`[data-letter="${correctLetter}"]`);
+    button.disabled = true;
 })
 
-socket.on('receivedWrongGuess', wrongGuessCount => {
+socket.on('receivedWrongGuess', ([wrongGuessCount, letterGuess]) => {
     const hangmanImage = document.querySelector(".hangmanImage")
     hangmanImage.src = `../assets/hangman-${wrongGuessCount}.svg`;
     hangmanImage.alt = `Illustration of the hanged man with ${wrongGuessCount} out of 9 wrong guesses used`;
+
+    const button = document.querySelector(`[data-letter="${letterGuess}"]`);
+    button.disabled = true;
 })
 
 socket.on('gameOverBroadcast', (data) => {

@@ -113,8 +113,8 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('receivedCorrectGuess', correctLetter)
     })
 
-    socket.on('wrongGuess', wrongGuessCount => {
-        socket.broadcast.emit('receivedWrongGuess', wrongGuessCount)
+    socket.on('wrongGuess', ([wrongGuessCount, letterGuess]) => {
+        socket.broadcast.emit('receivedWrongGuess', ([wrongGuessCount, letterGuess]))
     })
 
     socket.on('gameOver', (data) => {
