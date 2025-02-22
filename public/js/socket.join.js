@@ -24,9 +24,10 @@ import socket from './socket.client.js';
       socket.on('roomCreated', (roomId) => {
         currentRoomId = roomId;
         document.getElementById('roomInfo').innerHTML = `
-        Room created! Share this ID with your friends: ${roomId}
-        <br>
         <button class="startBtn" onclick="startGame()">Start Game</button>
+        <div class="roomId">${roomId}</div>
+        <P>Room created!</p>
+        <p>Share the room-id with your friends</p>
           `;
           document.getElementById('menu').style.display = 'none';
         });
