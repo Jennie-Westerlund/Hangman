@@ -140,6 +140,37 @@ io.on('connection', (socket) => {
           word: data.word
         });
       });
+    
+	socket.on('restartGame', (roomId) => {
+        const room = rooms.get(roomId);
+        if (room) {
+            // Reset game state with new word
+            room.gameState.word = getRandomWord(words);
+            room.gameState.guessedLetters = [];
+            room.gameState.gameStarted = true;
+            room.gameState.wrongGuessCount = 0;
+            
+            // Broadcast new game state to all players in room
+            io.to(roomId).emit('gameRestarted', room.gameState);
+        }
+    });
+
+    socket.on('exitRoom', (roomId) => {
+        const room = rooms.get(roomId);
+        if (room) {
+            const playerIndex = room.players.indexOf(socket.id);
+            if (playerIndex !== -1) {
+                room.players.splice(playerIndex, 1);
+                socket.leave(roomId);
+                
+                // Notify remaining players
+                io.to(roomId).emit('playerLeft', {
+                    playerCount: room.players.length - room.gameState.disconnectedPlayers.size,
+                    playerId: socket.id
+                });
+            }
+        }
+    });
 
     socket.on('disconnect', () => {
       console.log('User disconnected:', socket.id);

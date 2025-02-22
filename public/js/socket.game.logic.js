@@ -6,6 +6,9 @@ const socket = io();
         const maxGuesses = 9;
         const gameModal = document.getElementById('gameModal')
         const wordDisplay = document.getElementById("wordDisplay");
+        const restartButton = document.getElementById('restartButton');
+        const exitButton = document.getElementById('exitButton');
+        const hangmanImage = document.querySelector(".hangmanImage")
 
         function updateGameStatus(gameState) {
             const gameStatus = document.getElementById('gameStatus');
@@ -23,6 +26,39 @@ const socket = io();
             gameModal.querySelector('p').innerHTML = `${modalText} <strong>${word}</strong>`;
             gameModal.classList.add('show');
           }
+     
+          function resetGame() {
+            wordDisplay.innerHTML = currentGameState.word.split("").map(() => `<li class="letter"></li>`).join("");
+    
+            wrongGuessCount = currentGameState.wrongGuessCount || 0;
+            hangmanImage.src = `../assets/hangman-${wrongGuessCount}.svg`;
+            hangmanImage.alt = `Illustration of the hanged man with ${wrongGuessCount} out of 9 wrong guesses used`;
+    
+            const allButtons = document.querySelectorAll('.letter-button');
+            allButtons.forEach(button => {
+            button.disabled = false;
+            button.classList.remove('guessed');
+            });
+    
+            gameModal.classList.remove('show');
+            }
+    
+            // Event listeners for the buttons
+            restartButton.addEventListener('click', () => {
+            socket.emit('restartGame', roomId);
+            });
+    
+            exitButton.addEventListener('click', () => {
+            socket.emit('exitRoom', roomId);
+            window.location.href = '/';  // Redirect to index.html
+            });
+    
+            // Add this socket listener for game restart
+            socket.on('gameRestarted', (gameState) => {
+            currentGameState = gameState;
+            resetGame();
+            updateGameStatus(gameState);
+            });
 
         socket.on('connect', () => {
             if (roomId) {
@@ -107,7 +143,6 @@ socket.on('receivedCorrectGuess', correctLetter => {
 })
 
 socket.on('receivedWrongGuess', (data) => {
-    const hangmanImage = document.querySelector(".hangmanImage");
     hangmanImage.src = `../assets/hangman-${data.wrongGuessCount}.svg`;
     hangmanImage.alt = `Illustration of the hanged man with ${data.wrongGuessCount} out of 9 wrong guesses used`;
 
