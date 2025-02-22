@@ -26,6 +26,8 @@
 - Fixa så alla i rummet ser att button blivit inactive inte bara den som klicka!
 
 ### Lördag 
-
+- 9 fel-gissningar "game-over"
+- Alla rätt!
+- starta nytt spel i rummet?
 
 ### Söndag
