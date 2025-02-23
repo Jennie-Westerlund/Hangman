@@ -10,6 +10,8 @@
   --Disabled-text: #ffca94;
   --White: #FFFFFF; 
   --Green: #48783B;
+  --Click-green: #335f27;
+  --Clicked-red: #921616;
   --Red: #B82A2A;
   --Dark: #00000;
 
@@ -83,6 +85,10 @@ body {
   margin-left: 0.5rem;
 }
 
+#restartButton:active {
+  background-color: var(--Click-green);
+}
+
 #gameStatus {
   display: flex;
   flex-direction: row;
@@ -113,6 +119,10 @@ body {
   padding: 0.5rem 0.75rem;
   font-size: 1.1rem;
   margin-left: 0.5rem;
+}
+
+#exitButton:active {
+  background-color: var(--Clicked-red);
 }
 
 /* Hangman circle */
