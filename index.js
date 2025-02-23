@@ -40,7 +40,6 @@ io.on('connection', (socket) => {
             gameState: {
                 word: '',
                 guessedLetters: [],
-                currentTurn: socket.id,
                 gameStarted: false,
                 disconnectedPlayers: new Set(),
                 wrongGuessCount: 0
@@ -111,8 +110,8 @@ io.on('connection', (socket) => {
 
     // Game-logic server-side
     socket.on('correctGuess', correctLetter => {
-        socket.broadcast.emit('receivedCorrectGuess', correctLetter)
-    })
+        socket.broadcast.emit('receivedCorrectGuess', correctLetter);
+    });
 
     socket.on('wrongGuess', (letterGuess) => {
         const room = [...rooms.values()].find(r => r.players.includes(socket.id));
