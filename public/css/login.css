@@ -1,16 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 /* Variables */
 :root {
     --Primary-dark: #F4A14D;
     --Primary-medium: #FFB76F; 
+    --Primary-light: #FFC182;
+    --Almost-white: #fde6cf;
+    --Disabled-button: #f8ad61;
+    --Disabled-text: #ffca94;
+    --White: #FFFFFF; 
     --Green: #48783B;
-    --Dark: rgb(0, 0, 0);
+    --Red: #B82A2A;
+    --Dark: #00000;
 
-    --Primary-font: Arial, Helvetica, sans-serif;
-}
+    --Message-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  
+    --Primary-font: "Inter", sans-serif;
+  }
 
 * {
     box-sizing: border-box;
-    color: #FFFFFF;
+    color: var(--White);
 }
 
 body { 
@@ -59,7 +69,7 @@ body {
 
 button {
     background-color: var(--Green);
-    color: white;
+    color: var(--White);
     border: none;
     border-radius: 5px;
     padding: 0.5rem 0.75rem;
@@ -74,7 +84,7 @@ button {
     border-radius: 5px;
     background-color: var(--Primary-dark);
     text-align: center;
-    color: white;
+    color: var(--White);
     font-size: 1rem;
 }
 
@@ -100,14 +110,14 @@ button {
     border-radius: 5px;
     background-color: var(--Primary-dark);
     text-align: center;
-    color: #ffe4c8;
+    color: var(--Almost-white);
     font-size: 1rem;
 }
 
 #roomInfo p {
     margin: 0;
     font-size: 1rem;
-    color: #ffe4c8;
+    color: var(--Almost-white);
 }
 
 #errorDisplay {
@@ -115,11 +125,11 @@ button {
     position: fixed;
     top: 20px;
     right: 20px;
-    background-color: #B82A2A;
-    color: white;
+    background-color: var(--Red);
+    color: var(--White);
     padding: 15px 25px;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: var(--Message-shadow);
     z-index: 1000;
     animation: slideIn 0.3s ease-out;
 }
