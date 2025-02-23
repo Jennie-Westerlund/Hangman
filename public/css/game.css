@@ -24,6 +24,7 @@ body {
   min-height: 100vh;
   background-color: var(--Primary-dark); 
   padding: 1rem; 
+  overflow: hidden;
 }
 
 #gameRoom {
@@ -50,7 +51,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  gap: 1rem;
+  gap: 0.6rem;
 }
 
 #gameStatus {
@@ -82,7 +83,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 1rem;
+  gap: 0.6rem;
 }
 
 #roomTitle {
@@ -135,6 +136,8 @@ body {
 
 #wordDisplay {
   margin-top: 90px;
+  padding: 0;
+  align-self: center;
   display: flex;
   gap: 15px;
   list-style: none;
