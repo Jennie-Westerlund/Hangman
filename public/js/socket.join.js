@@ -1,6 +1,9 @@
 import socket from './socket.client.js';
 let currentRoomId = null;
 
+const errorDisplay = document.getElementById('errorDisplay');
+const errorMessage = document.getElementById('errorMessage');
+
 export function createRoom() {
     socket.emit('createRoom');
 }
@@ -10,10 +13,12 @@ export function joinRoom() {
     if (roomId) {
         socket.emit('joinRoom', roomId);
     } else {
-        socket.emit('error', {
-            message: 'Please enter a roomID',
-            code: 'ROOM_ENTER_ID'
-        });
+        errorMessage.textContent = 'Please enter a roomID';
+        errorDisplay.style.display = 'block';
+        
+        setTimeout(() => {
+            errorDisplay.style.display = 'none';
+        }, 3000);
     }
 }
 
@@ -55,9 +60,6 @@ socket.on('playerJoined', (data) => {});
 socket.on('playerLeft', (data) => {});
 
 socket.on('error', (error) => {
-    const errorDisplay = document.getElementById('errorDisplay');
-    const errorMessage = document.getElementById('errorMessage');
-
     errorMessage.textContent = error.message;
     errorDisplay.style.display = 'block';
 
@@ -69,8 +71,6 @@ socket.on('error', (error) => {
         case 'ROOM_NOT_FOUND':
         break;
         case 'ROOM_FULL':
-        break;
-        case 'ROOM_ENTER_ID':
         break;
         default:
         break;
