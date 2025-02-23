@@ -5,31 +5,33 @@
     <link rel="stylesheet" href="../css/game.css">
 </head>
 <body>
-    <section id="gameModal">
-        <h4 id="gameResult">Game over!</h4>
-        <p id="answer">The correct answer was:</p>
-        <button onclick="document.getElementById('gameModal').classList.remove('show')">Close</button>
+    <section id="gameRoom">
+        <section id="gameModal">
+            <h4 id="gameResult">Game over!</h4>
+            <p id="answer">The correct answer was:</p>
+            <button onclick="document.getElementById('gameModal').classList.remove('show')">Close</button>
+        </section>
+        <div id="gameContainer">
+            <div id="playersLogic">
+                <img src="../assets/players-icon.svg" alt="Silhouette of a person symbolizing players">
+                <p id="playersList"></p>
+                <button id="restartButton">Restart Game</button>
+            </div>
+            <div id="gameStatus">
+                <p id="roomTitle"></p>
+                <p id="displayRoomId"></p>
+                <button id="exitButton">Exit Room</button>
+            </div>
+        </div>
+        <div class="hangmanContainer">
+            <img src="../assets/hangman-0.svg" alt="Illustration of the hanged man with 0 out of 9 wrong guesses used" class="hangmanImage">
+        </div>
+
+        <ul id="wordDisplay"></ul>
+
+        <section id="keyboard">        
+        </section>
     </section>
-    <div id="gameContainer">
-        <h2>Game Room</h2>
-        <div id="gameStatus"></div>
-        <div id="playersList"></div>
-    </div>
-    <div class="hangmanContainer">
-        <img src="../assets/hangman-0.svg" alt="Illustration of the hanged man with 0 out of 9 wrong guesses used" class="hangmanImage">
-    </div>
-
-    <ul id="wordDisplay"></ul>
-
-    <section id="keyboard">        
-    </section>
-    <p id="messages"></p>
-
-    <div class="gameChoices">
-        <button id="restartButton">Restart Game</button>
-        <button id="exitButton">Exit Room</button>
-    </div>
-
     <script src="/socket.io/socket.io.js"></script>
     <script src="../js/socket.game.logic.js"></script>
     <script src="../js/keyboard.js"></script>

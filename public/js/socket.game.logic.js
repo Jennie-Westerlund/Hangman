@@ -11,8 +11,10 @@ const socket = io();
         const hangmanImage = document.querySelector(".hangmanImage")
 
         function updateGameStatus(gameState) {
-            const gameStatus = document.getElementById('gameStatus');
-            gameStatus.innerHTML = `Game is active - Room: ${roomId}`;
+            const roomTitle = document.getElementById('roomTitle');
+            const displayRoomId = document.getElementById('displayRoomId');
+            roomTitle.innerHTML = "Room id:";
+            displayRoomId.innerHTML = `${roomId}`;
             wordDisplay.innerHTML = gameState.word.split("").map(() => `<li class="letter"></li>`).join("");
             console.log('Game State:', gameState);
             currentGameState = gameState;
@@ -79,14 +81,16 @@ const socket = io();
 
         socket.on('playerJoined', (data) => {
             console.log(`New player joined. Total players: ${data.playerCount}`);
-            document.getElementById('playersList').innerHTML = 
-                `Number of players: ${data.playerCount}`;
+            const playersList = document.getElementById('playersList');
+            playersList.innerHTML = 
+                `${data.playerCount}`;
         });
 
         socket.on('playerLeft', (data) => {
             console.log(`Player left. Remaining players: ${data.playerCount}`);
-            document.getElementById('playersList').innerHTML = 
-                `Number of players: ${data.playerCount}`;
+            const playersList = document.getElementById('playersList');
+            playersList.innerHTML = 
+                `${data.playerCount}`;
         });
 
         socket.on('error', (message) => {
