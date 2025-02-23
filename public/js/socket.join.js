@@ -34,9 +34,9 @@ import socket from './socket.client.js';
 
       socket.on('joinedRoom', (roomId) => {
           currentRoomId = roomId;
-          document.getElementById('roomInfo').innerHTML = 'Joined room! Waiting for game to start...';
-          document.getElementById('menu').style.display = 'none';
-          document.getElementById('joinForm').style.display = 'none';
+          document.getElementById('roomInfo').innerHTML = 'Joined room! Waiting for game to start...'; // Onödig?
+          document.getElementById('menu').style.display = 'none'; // Igen, har vi inte en re-direct som tar en till nya sidan? 
+          document.getElementById('joinForm').style.display = 'none'; // Tror inte vi har en sån längre pga mina layout-ändringar?
       });
 
       socket.on('gameStarted', (gameState) => {
