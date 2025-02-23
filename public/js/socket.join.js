@@ -50,13 +50,9 @@ socket.on('gameState', (gameState) => {
     }
 });
       
-socket.on('playerJoined', (data) => {
-    console.log(`New player joined. Total players: ${data.playerCount}`);
-});
+socket.on('playerJoined', (data) => {});
 
-socket.on('playerLeft', (data) => {
-    console.log(`Player left. Remaining players: ${data.playerCount}`);
-});
+socket.on('playerLeft', (data) => {});
 
 socket.on('error', (error) => {
     const errorDisplay = document.getElementById('errorDisplay');

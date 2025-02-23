@@ -16,12 +16,10 @@ function updateGameStatus(gameState) {
     roomTitle.innerHTML = "Room ID:";
     displayRoomId.innerHTML = `${roomId}`;
     wordDisplay.innerHTML = gameState.word.split("").map(() => `<li class="letter"></li>`).join("");
-    console.log('Game State:', gameState);
     currentGameState = gameState;
 }
 
 function showGameModal(isVictory, word) {
-    console.log("GAME OVER TRIGGERED:", isVictory ? "Victory" : "Defeat", word);
     const modalText = isVictory ? `You found the word:` : `The correct word was:`;
     gameModal.querySelector('h4').innerText = `${isVictory ? 'You win!' : 'Game over!'}`;
     gameModal.querySelector('p').innerHTML = `${modalText} <strong>${word}</strong>`;
@@ -79,14 +77,12 @@ socket.on('gameStarted', (gameState) => {
 });
 
 socket.on('playerJoined', (data) => {
-    console.log(`New player joined. Total players: ${data.playerCount}`);
     const playersList = document.getElementById('playersList');
     playersList.innerHTML = 
         `${data.playerCount}`;
 });
 
 socket.on('playerLeft', (data) => {
-    console.log(`Player left. Remaining players: ${data.playerCount}`);
     const playersList = document.getElementById('playersList');
     playersList.innerHTML = 
         `${data.playerCount}`;
@@ -150,7 +146,6 @@ socket.on('receivedWrongGuess', (data) => {
 });
 
 socket.on('gameOverBroadcast', (data) => {
-    console.log('Client received gameOver - word:', data.word);
     const gameModal = document.getElementById('gameModal');
     const modalText = data.isVictory ? `You found the word:` : `The correct word was:`;
 

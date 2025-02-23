@@ -29,11 +29,9 @@ app.get('/game', (req, res) => {
 const rooms = new Map();
 
 io.on('connection', (socket) => {
-    console.log('User connected:', socket.id);
 
     socket.on('createRoom', () => {
         const roomId = nanoid(5);
-        console.log('Creating new room:', roomId);
         
         rooms.set(roomId, {
             players: [socket.id],
@@ -46,17 +44,14 @@ io.on('connection', (socket) => {
             },
         });
 
-        console.log('Current rooms:', Array.from(rooms.keys()));
         socket.join(roomId);
         socket.emit('roomCreated', roomId);
     });
 
     socket.on('joinRoom', (roomId) => {
-        console.log('Attempt to join room:', roomId);
         const room = rooms.get(roomId);
 
         if (!room) {
-            console.log('Room not found:', roomId);
             socket.emit('error', {
                 message: 'Room not found',
                 code: 'ROOM_NOT_FOUND'
@@ -67,7 +62,6 @@ io.on('connection', (socket) => {
         const activePlayers = room.players.filter(id => !room.gameState.disconnectedPlayers.has(id));
         
         if (activePlayers.length >= 6) {
-            console.log('Room is full');
             socket.emit('error', {
                 message: 'Room is full',
                 code: 'ROOM_FULL'
@@ -79,7 +73,6 @@ io.on('connection', (socket) => {
 
         if (!room.players.includes(socket.id)) {
             room.players.push(socket.id);
-            console.log(`Player ${socket.id} joined room ${roomId}`);
         }
         
         socket.join(roomId);
@@ -96,17 +89,13 @@ io.on('connection', (socket) => {
     });
 
     socket.on('startGame', (roomId) => {
-        console.log('Starting game in room:', roomId);
         const room = rooms.get(roomId);
         
         if (room) {
             room.gameState.gameStarted = true;
             room.gameState.word = getRandomWord(words);
-            console.log(room.gameState.word);
-            console.log('Game started in room:', roomId);
             io.to(roomId).emit('gameStarted', room.gameState);
         } else {
-            console.log('Room not found when starting game:', roomId);
             socket.emit('error', {
                 message: 'Room not found',
                 code: 'ROOM_NOT_FOUND'
@@ -140,7 +129,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('gameOver', (data) => {
-        console.log('Server gameOver - word:', data.word);
         io.to(data.roomId).emit('gameOverBroadcast', {
           isVictory: data.isVictory,
           word: data.word
@@ -179,14 +167,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-      console.log('User disconnected:', socket.id);
       for (const [roomId, room] of rooms.entries()) {
           const playerIndex = room.players.indexOf(socket.id);
           if (playerIndex !== -1) {
               // Instead of removing the player, mark them as disconnected
               room.gameState.disconnectedPlayers.add(socket.id);
-              
-              console.log(`Player ${socket.id} temporarily disconnected from room ${roomId}`);
 
               // Only delete room if all players have been disconnected for more than 5 minutes
               const activePlayersCount = room.players.length - room.gameState.disconnectedPlayers.size;
@@ -198,7 +183,6 @@ io.on('connection', (socket) => {
                       if (currentRoom && 
                           currentRoom.players.length - currentRoom.gameState.disconnectedPlayers.size === 0) {
                           rooms.delete(roomId);
-                          console.log(`Room ${roomId} deleted - no players rejoined after timeout`);
                       }
                   }, 5 * 60 * 1000); // 5 minutes
               }
