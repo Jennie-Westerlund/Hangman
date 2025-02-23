@@ -13,7 +13,7 @@ const hangmanImage = document.querySelector(".hangmanImage");
 function updateGameStatus(gameState) {
     const roomTitle = document.getElementById('roomTitle');
     const displayRoomId = document.getElementById('displayRoomId');
-    roomTitle.innerHTML = "Room id:";
+    roomTitle.innerHTML = "Room ID:";
     displayRoomId.innerHTML = `${roomId}`;
     wordDisplay.innerHTML = gameState.word.split("").map(() => `<li class="letter"></li>`).join("");
     console.log('Game State:', gameState);
