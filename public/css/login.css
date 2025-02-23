@@ -1,7 +1,7 @@
 /* Variables */
 :root {
     --Primary-dark: #F4A14D;
-    --Primary-light: #FFB76F; 
+    --Primary-medium: #FFB76F; 
     --Green: #48783B;
     --Dark: rgb(0, 0, 0);
 
@@ -33,7 +33,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    background: var(--Primary-light);
+    background: var(--Primary-medium);
 }
 
 .logo {
@@ -79,7 +79,7 @@ button {
 }
 
 #menu input::placeholder {
-    color: var(--Primary-light);
+    color: var(--Primary-medium);
     font-size: 1rem;
 }
 

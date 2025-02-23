@@ -11,19 +11,19 @@
             <p id="answer">The correct answer was:</p>
             <button onclick="document.getElementById('gameModal').classList.remove('show')">Close</button>
         </section>
-        <div id="gameContainer">
+        <div id="gameContainer"> 
             <div id="playersLogic">
-                <img src="../assets/players-icon.svg" alt="Silhouette of a person symbolizing players">
+                <img src="../assets/players-icon.svg" alt="Silhouette of a person symbolizing players" class="playersIcon">
                 <p id="playersList"></p>
                 <button id="restartButton">Restart Game</button>
             </div>
             <div id="gameStatus">
                 <p id="roomTitle"></p>
                 <p id="displayRoomId"></p>
-                <button id="exitButton">Exit Room</button>
+                <button id="exitButton">Exit</button>
             </div>
-        </div>
-        <div class="hangmanContainer">
+        </div> 
+        <div id="hangmanContainer">
             <img src="../assets/hangman-0.svg" alt="Illustration of the hanged man with 0 out of 9 wrong guesses used" class="hangmanImage">
         </div>
 

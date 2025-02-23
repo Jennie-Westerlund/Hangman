@@ -21,8 +21,8 @@
 ### Fredag
 - 9 fel-gissningar "game-over"
 - starta nytt spel i rummet?
-* dynamisk alt-text? 
-* ändra divar etc i html så att det går ihop med vår design
+- dynamisk alt-text? 
+- ändra divar etc i html så att det går ihop med vår design
 - Fixa så alla i rummet ser att button blivit inactive inte bara den som klicka!
 
 ### Lördag 
@@ -31,3 +31,6 @@
 - starta nytt spel i rummet?
 
 ### Söndag
+- Ta bort Console.log
+- Fixa indenteringen
+- Gör CSS för game-sidan
