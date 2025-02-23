@@ -10,13 +10,14 @@
     --Disabled-text: #ffca94;
     --White: #FFFFFF; 
     --Green: #48783B;
+    --Click-green: #335f27;
+    --Clicked-red: #921616;
     --Red: #B82A2A;
     --Dark: #00000;
-
-    --Message-shadow: 0 2px 5px rgba(0,0,0,0.2);
   
     --Primary-font: "Inter", sans-serif;
   }
+  
 
 * {
     box-sizing: border-box;
@@ -74,6 +75,10 @@ button {
     border-radius: 5px;
     padding: 0.5rem 0.75rem;
     font-size: 1.1rem;
+}
+
+Button:active {
+    background-color: var(--Click-green);
 }
 
 #menu input {
