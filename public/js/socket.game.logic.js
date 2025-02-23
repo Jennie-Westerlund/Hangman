@@ -92,10 +92,6 @@ socket.on('playerLeft', (data) => {
         `${data.playerCount}`;
 });
 
-socket.on('error', (message) => {
-    alert(message);
-});
-
 // Add reconnection logic in game.html
 window.onload = function() {
     const storedRoomId = localStorage.getItem('currentRoomId');

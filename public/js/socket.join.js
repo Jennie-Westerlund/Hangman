@@ -9,9 +9,11 @@ export function joinRoom() {
     const roomId = document.getElementById('roomInput').value.trim();
     if (roomId) {
         socket.emit('joinRoom', roomId);
-        window.location.href = `/game?room=${roomId}`;
     } else {
-        alert('Please enter a room ID');
+        socket.emit('error', {
+            message: 'Please enter a roomID',
+            code: 'ROOM_ENTER_ID'
+        });
     }
 }
 
@@ -33,7 +35,7 @@ socket.on('roomCreated', (roomId) => {
 });
 
 socket.on('joinedRoom', (roomId) => {
-    currentRoomId = roomId;
+    window.location.href = `/game?room=${roomId}`;
 });
 
 socket.on('gameStarted', (gameState) => {
@@ -56,6 +58,26 @@ socket.on('playerLeft', (data) => {
     console.log(`Player left. Remaining players: ${data.playerCount}`);
 });
 
-socket.on('error', (message) => {
-    alert(message);
-});
+socket.on('error', (error) => {
+    const errorDisplay = document.getElementById('errorDisplay');
+    const errorMessage = document.getElementById('errorMessage');
+
+    errorMessage.textContent = error.message;
+    errorDisplay.style.display = 'block';
+
+    setTimeout(() => {
+        errorDisplay.style.display = 'none';
+    }, 5000);
+
+    switch(error.code) {
+        case 'ROOM_NOT_FOUND':
+        break;
+        case 'ROOM_FULL':
+        break;
+        case 'ROOM_ENTER_ID':
+        break;
+        default:
+        break;
+    }
+  });
+  

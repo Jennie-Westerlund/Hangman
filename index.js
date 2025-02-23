@@ -57,18 +57,22 @@ io.on('connection', (socket) => {
 
         if (!room) {
             console.log('Room not found:', roomId);
-            socket.emit('error', 'Room not found');
+            socket.emit('error', {
+                message: 'Room not found',
+                code: 'ROOM_NOT_FOUND'
+            });
             return;
         }
 
-        if (room.players.length >= 6) {
-          // Don't count disconnected players in the limit
-          const activePlayers = room.players.filter(id => !room.gameState.disconnectedPlayers.has(id));
-          if (activePlayers.length >= 6) {
-              console.log('Room is full');
-              socket.emit('error', 'Room is full');
-              return;
-          }
+        const activePlayers = room.players.filter(id => !room.gameState.disconnectedPlayers.has(id));
+        
+        if (activePlayers.length >= 6) {
+            console.log('Room is full');
+            socket.emit('error', {
+                message: 'Room is full',
+                code: 'ROOM_FULL'
+            });
+            return;
         }
 
         room.gameState.disconnectedPlayers.delete(socket.id);
@@ -82,7 +86,6 @@ io.on('connection', (socket) => {
 
         if (room.gameState.gameStarted) {
             socket.emit('gameState', room.gameState);
-        } else {
             socket.emit('joinedRoom', roomId);
         }
 
@@ -104,7 +107,11 @@ io.on('connection', (socket) => {
             io.to(roomId).emit('gameStarted', room.gameState);
         } else {
             console.log('Room not found when starting game:', roomId);
-            socket.emit('error', 'Room not found');
+            socket.emit('error', {
+                message: 'Room not found',
+                code: 'ROOM_NOT_FOUND'
+            });
+            return;
         }
     });
 
