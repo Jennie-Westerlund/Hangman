@@ -13,9 +13,10 @@
 
 
 ### Onsdag 
-
+- Spel-logik
 
 ### Torsdag 
+- Spel-logik
 
 
 ### Fredag
@@ -34,3 +35,8 @@
 - Ta bort Console.log
 - Fixa indenteringen
 - Gör CSS för game-sidan
+
+### Efter redovisning 
+- Confetti-package
+- Lägg tillbaka "Joined room! Waiting for game to start..."
+- Lägg in "Waiting for host to start game..."
