@@ -29,7 +29,7 @@ body {
   min-height: 100vh;
   background-color: var(--Primary-dark); 
   padding: 1rem; 
-  overflow: hidden;
+  margin: 0;
 }
 
 #gameRoom {
