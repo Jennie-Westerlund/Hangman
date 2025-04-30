@@ -1,3 +1,5 @@
+<img src="./public/assets/Readme-logo.png" alt="HangMan logotype" width="500" height="500" />
+
 # Hangman
 Has this ever happened to you? You are talking with your friends online and get bored, if only you could play the fun games from your childhood again. But Frank had to move away because of his girlfriend and Lisa is studying abroad. If only we could get together... Oh but wait! Two novice dev-students created a digital hangman where we all could connect, what a game-changer!  
 Jennie and Josefine introduce to you... a multi-player game of hangman!
