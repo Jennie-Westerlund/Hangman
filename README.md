@@ -22,7 +22,9 @@ The naming of feature-branches should be explanatory like "Feature--LogIn" or "B
 
 ## Installation
 
-Cool info!
+clone down the repository 
+npm install in the terminal
+node index.js
 
 ## Assignment
 Create something that solves a problem 
