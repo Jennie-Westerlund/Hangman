@@ -28,7 +28,8 @@ const words = [
   "MARBLE",
   "ROCKET",
   "OCEAN",
-  "BUTTON"
+  "BUTTON",
+  "CANDY"
 ];
 
 export default words;
